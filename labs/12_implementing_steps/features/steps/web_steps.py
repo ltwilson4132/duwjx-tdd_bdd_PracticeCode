@@ -13,10 +13,12 @@ from behave import given, when, then
 def step_impl(context):
     context.response = context.driver.get(f"{context.base_url}/pets")
 
-
+# Still failing when run Behave 
 @when('I set the "Category" to "dog"')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I set the "Category" to "dog"')
+    element = context.driver.find_element_by_id('pet_category')
+    element.clear()
+    element.send_keys('dog')
 
 
 @when('I click the "Search" button')
