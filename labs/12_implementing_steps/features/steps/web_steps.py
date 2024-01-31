@@ -11,7 +11,7 @@ from behave import given, when, then
 
 @given('I am on the "Home Page"')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Given I am on the "Home Page"')
+    context.response = context.driver.get(f"{context.base_url}/pets")
 
 
 @when('I set the "Category" to "dog"')
