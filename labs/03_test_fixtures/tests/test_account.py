@@ -26,6 +26,7 @@ class TestAccountModel(TestCase):
 
     def setUp(self):
         """Truncate the tables"""
+        db.session.query(Account).delete() # Deletes Accounts table before each test
 
     def tearDown(self):
         """Remove the session"""
@@ -39,3 +40,10 @@ class TestAccountModel(TestCase):
         account = Account(**ACCOUNT_DATA[0])
         account.create()
         self.assertEqual(len(Account.all()), 1)
+
+    def test_create_all_accounts(self):
+        """Test creating all accounts"""
+        for data in ACCOUNT_DATA:
+            account = Account(**data)
+            account.create()
+        self.assertEqual(len(Account.all()), len(ACCOUNT_DATA))
