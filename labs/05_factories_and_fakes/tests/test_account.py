@@ -6,8 +6,9 @@ from random import randrange
 from unittest import TestCase
 from models import db
 from models.account import Account, DataValidationError
+from factories import AccountFactory
 
-ACCOUNT_DATA = {}
+NUM_TEST_ACCOUNTS = 10
 
 class TestAccountModel(TestCase):
     """Test Account Model"""
@@ -41,10 +42,11 @@ class TestAccountModel(TestCase):
 
     def test_create_all_accounts(self):
         """ Test creating multiple Accounts """
-        for data in ACCOUNT_DATA:
-            account = Account(**data)
+        global NUM_TEST_ACCOUNTS
+        for _ in range(NUM_TEST_ACCOUNTS):
+            account = AccountFactory()
             account.create()
-        self.assertEqual(len(Account.all()), len(ACCOUNT_DATA))
+        self.assertEqual(len(Account.all()), NUM_TEST_ACCOUNTS)
 
     def test_create_an_account(self):
         """ Test Account creation using known data """
