@@ -13,7 +13,6 @@ from behave import given, when, then
 def step_impl(context):
     context.response = context.driver.get(context.base_url)
 
-# Still failing when run Behave 
 @when('I set the "Category" to "dog"')
 def step_impl(context):
     element = context.driver.find_element_by_id('pet_category')
@@ -32,14 +31,17 @@ def step_impl(context):
 
 @then('I should see "Fido" in the results')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see "Fido" in the results')
+    element = context.driver.find_element_by_id('search_results')
+    assert "Fido" in element.text
 
 
 @then('I should not see "Kitty" in the results')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should not see "Kitty" in the results')
+    element = context.driver.find_element_by_id('search_results')
+    assert "Kitty" not in element.text
 
 
 @then('I should not see "Leo" in the results')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should not see "Leo" in the results')
+    element = context.driver.find_element_by_id('search_results')
+    assert "Leo" not in element.text
