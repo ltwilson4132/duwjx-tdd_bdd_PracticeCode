@@ -22,7 +22,11 @@ class TestStack(TestCase):
 
     def test_peek(self):
         """Test peeking at the top the stack"""
-        raise Exception("not implemented")
+        self.stack.push(5)
+        self.assertFalse(self.stack.is_empty())
+        self.assertEqual(self.stack.peek(), 5)
+        self.stack.push(9)
+        self.assertEqual(self.stack.peek(), 9)
 
     def test_is_empty(self):
         """Test if the stack is empty"""
