@@ -14,10 +14,15 @@ class TestAccountModel(TestCase):
     @classmethod
     def setUpClass(cls):
         """ Connect and load data needed by tests """
+        db.create_all() # Creates all tables in database to test
+        global ACCOUNT_DATA
+        with open('tests/fixture/account_data.json') as json_data:
+            ACCOUNT_DATA = json.load(json_data)
 
     @classmethod
     def tearDownClass(cls):
         """Disconnect from database"""
+        db.session.close() # Closes database session after all tests are done
 
     def setUp(self):
         """Truncate the tables"""
