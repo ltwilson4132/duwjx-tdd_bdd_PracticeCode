@@ -14,7 +14,10 @@ class TestStack(TestCase):
 
     def test_push(self):
         """Test pushing an item into the stack"""
-        raise Exception("not implemented")
+        self.assertTrue(self.stack.is_empty())
+        self.stack.push(5)
+        self.assertFalse(self.stack.is_empty())
+        self.assertEqual(self.stack.peek(), 5)
 
     def test_pop(self):
         """Test popping an item of off the stack"""
