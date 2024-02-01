@@ -14,13 +14,19 @@ class TestAccountModel(TestCase):
     @classmethod
     def setUpClass(cls):
         """ Connect and load data needed by tests """
+        db.create_all() # Creates all tables in database to test
+        global ACCOUNT_DATA
+        with open('tests/fixtures/account_data.json') as json_data:
+            ACCOUNT_DATA = json.load(json_data)
 
     @classmethod
     def tearDownClass(cls):
         """Disconnect from database"""
+        db.session.close() # Closes database session after all tests are done
 
     def setUp(self):
         """Truncate the tables"""
+        db.session.query(Account).delete() # Deletes Accounts table before each test
 
     def tearDown(self):
         """Remove the session"""
@@ -29,3 +35,15 @@ class TestAccountModel(TestCase):
     #  T E S T   C A S E S
     ######################################################################
 
+    def test_create_an_account(self):
+        """Test create a single Account"""
+        account = Account(**ACCOUNT_DATA[0])
+        account.create()
+        self.assertEqual(len(Account.all()), 1)
+
+    def test_create_all_accounts(self):
+        """Test creating all accounts"""
+        for data in ACCOUNT_DATA:
+            account = Account(**data)
+            account.create()
+        self.assertEqual(len(Account.all()), len(ACCOUNT_DATA))
